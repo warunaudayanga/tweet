@@ -7,7 +7,7 @@
 
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app/app.module";
+import { AppModule } from "./app.module";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 async function bootstrap() {
