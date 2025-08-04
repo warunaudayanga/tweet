@@ -8,7 +8,6 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - postgres
       - user-ms
       - tweet-ms
     environment:
@@ -25,8 +24,6 @@ services:
       dockerfile: apps/user-ms/Dockerfile
     ports:
       - "3001:3001"
-    depends_on:
-      - postgres
     environment:
       NODE_ENV: production
     env_file:
@@ -40,25 +37,10 @@ services:
       dockerfile: apps/tweet-ms/Dockerfile
     ports:
       - "3002:3002"
-    depends_on:
-      - postgres
     environment:
       NODE_ENV: production
     env_file:
       - .env
-    networks:
-      - tweet-net
-
-  postgres:
-    image: bitnami/postgresql:13
-    environment:
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=root
-      - POSTGRESQL_DATABASE=tweets
-    volumes:
-      - postgres-data:/bitnami/postgresql
-    ports:
-      - "5433:5432"
     networks:
       - tweet-net
 

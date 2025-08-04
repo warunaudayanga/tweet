@@ -5,7 +5,7 @@ import * as process from "node:process";
 import { Transport } from "@nestjs/microservices";
 import { ServiceName } from "../enums";
 
-dotenv.config();
+dotenv.config({ path: "/.env" });
 
 export const configuration = () =>
     ({
