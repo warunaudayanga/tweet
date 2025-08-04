@@ -14,6 +14,7 @@ export default [
       "**/dist/*",
       "eslint.config.mjs",
       "webpack.config.js",
+      "migrations/*"
     ],
   },
   eslint.configs.recommended,

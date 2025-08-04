@@ -103,8 +103,12 @@ export class AuthService {
         } catch (error) {
             if (error instanceof ForbiddenException) throw error;
 
-            Logger.error(error, this.constructor.name);
-            throw Errors.invalidCredentials();
+            if (!(error instanceof UnauthorizedException)) {
+                Logger.error(error, this.constructor.name);
+                throw Errors.invalidCredentials();
+            }
+
+            throw error;
         }
     }
 

@@ -9,13 +9,13 @@ export class EmailService {
     constructor(private readonly mailService: MailerService) {}
 
     // noinspection JSUnusedGlobalSymbols
-    async sendWelcomeMail(email: string, context: WelcomeMailContext): Promise<boolean> {
+    async sendWelcomeMail(email: string, ctx: WelcomeMailContext): Promise<boolean> {
         try {
             await this.mailService.sendMail({
                 to: email,
                 subject: "Subject: Welcome to Heaven",
                 template: "account-welcome",
-                context,
+                context: { ...ctx },
             });
             return true;
         } catch {

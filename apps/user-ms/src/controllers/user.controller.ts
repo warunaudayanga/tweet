@@ -1,7 +1,15 @@
 import { Controller } from "@nestjs/common";
 import { UserService } from "../services";
 import { MessagePattern } from "@nestjs/microservices";
-import { configuration, GetAllPayload, GetOnePayload, GetPayload, ServiceName, SuccessResponse } from "@tweet/core";
+import {
+    configuration,
+    CreatePayload,
+    GetAllPayload,
+    GetOnePayload,
+    GetPayload,
+    ServiceName,
+    SuccessResponse,
+} from "@tweet/core";
 import { DeleteUserPayload, UpdateUserPayload, User } from "@tweet/core/user";
 
 @Controller()
@@ -21,6 +29,11 @@ export class UserController {
     @MessagePattern({ cmd: configuration().ms.commands(ServiceName.USER).GET_ALL })
     getAll({ options }: GetAllPayload<User>): Promise<User[]> {
         return this.userService.getAll(options);
+    }
+
+    @MessagePattern({ cmd: configuration().ms.commands(ServiceName.USER).CREATE })
+    create({ dto }: CreatePayload<User>): Promise<User> {
+        return this.userService.create(dto);
     }
 
     @MessagePattern({ cmd: configuration().ms.user.commands.UPDATE_USER })

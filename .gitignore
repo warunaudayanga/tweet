@@ -45,5 +45,5 @@ Thumbs.db
 /apps/tweet-gateway/.env
 /apps/tweet-ms/.env
 /apps/user-ms/.env
-/.env
-/prod.env
+/*.env
+/readme-help.md

@@ -12,6 +12,7 @@ import { FindOneOptions } from "typeorm/find-options/FindOneOptions";
 import { EntityId } from "../types";
 import { TypeOrmErrorCode } from "../enums";
 import { isQueryFailedError } from "../utils";
+import { RpcException } from "@nestjs/microservices";
 
 export abstract class CrudService<Model extends BaseModel> {
     protected constructor(
@@ -134,15 +135,15 @@ export abstract class CrudService<Model extends BaseModel> {
             switch (error.code) {
                 case TypeOrmErrorCode.UNIQUE: {
                     const [, property] = error.detail ? /\((\w+)\)=/.exec(error.detail) || [] : [];
-                    throw Errors.conflict(property);
+                    throw new RpcException(Errors.conflict(property));
                 }
                 default:
                     Logger.error(error, this.constructor.name);
-                    throw Errors.internal();
+                    throw new RpcException(Errors.internal());
             }
         }
 
         Logger.error(error, this.constructor.name);
-        throw Errors.internal();
+        throw new RpcException(Errors.internal());
     }
 }

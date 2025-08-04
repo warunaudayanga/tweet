@@ -2,7 +2,12 @@
   "name": "@tweet/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "migration:generate": "cross-var typeorm-ts-node-commonjs -d ./libs/core/src/configs/typeorm-migration.ts migration:generate migrations/$npm_config_name ",
+    "migration:create": "cross-var typeorm-ts-node-commonjs migration:create migrations/$npm_config_name",
+    "migration:run": "typeorm-ts-node-commonjs -d ./libs/core/src/configs/typeorm-migration.ts migration:run",
+    "migration:revert": "typeorm-ts-node-commonjs -d ./libs/core/src/configs/typeorm-migration.ts migration:revert"
+  },
   "private": true,
   "dependencies": {
     "@hichchi/utils": "^0.0.1-beta.2",
@@ -21,6 +26,7 @@
     "cacheable": "^1.10.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
+    "cross-var": "^1.1.0",
     "dotenv": "^17.2.1",
     "nodemailer": "^7.0.5",
     "passport-jwt": "^4.0.1",
@@ -28,6 +34,8 @@
     "pg": "^8.16.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typeorm": "^0.3.25",
     "typeorm-naming-strategies": "^4.1.0",
     "uuid": "^11.1.0"
@@ -54,6 +62,8 @@
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
     "@types/supertest": "^6.0.3",
+    "copy-webpack-plugin": "^13.0.0",
+    "cross-env": "^10.0.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-prettier": "^5.5.3",
@@ -67,6 +77,7 @@
     "typescript-eslint": "^8.29.0",
     "webpack-cli": "^5.1.4"
   },
+  "nx": {},
   "workspaces": [
     "apps/*",
     "libs/*"
