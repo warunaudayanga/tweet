@@ -3,10 +3,10 @@
 import { NestFactory } from "@nestjs/core";
 import { UserModule } from "./user.module";
 import { MicroserviceOptions } from "@nestjs/microservices";
-import { microservices } from "@tweet/core";
+import { configuration } from "@tweet/core";
 
 async function bootstrap(): Promise<void> {
-    const app = await NestFactory.createMicroservice<MicroserviceOptions>(UserModule, microservices().user);
+    const app = await NestFactory.createMicroservice<MicroserviceOptions>(UserModule, configuration().ms.user);
 
     await app.listen();
 }

@@ -7,9 +7,6 @@
       "path": "./apps/tweet-gateway"
     },
     {
-      "path": "./libs/config"
-    },
-    {
       "path": "./apps/tweet-ms"
     },
     {

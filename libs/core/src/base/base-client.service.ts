@@ -8,7 +8,7 @@ import { FindAllOptions, SafeFindManyOptions, SafeFindOptions } from "../interfa
 import { EntityId } from "../types";
 import { firstValueFrom } from "rxjs";
 import { ClientProxy } from "@nestjs/microservices";
-import { microservices, Service } from "../configs";
+import { configuration } from "../configs";
 import {
     CreatePayload,
     DeleteOnePayload,
@@ -19,17 +19,18 @@ import {
     GetPayload,
     UpdatePayload,
 } from "./base.payloads";
+import { ServiceName } from "../enums";
 
 export abstract class ClientCrudService<Model extends BaseModel> {
     protected constructor(
         protected readonly client: ClientProxy,
-        private readonly service: Service,
+        private readonly service: ServiceName,
     ) {}
 
     create(dto: DeepPartial<Model>, options: Omit<SafeFindOptions<Model>, "where"> = {}): Promise<Model> {
         return firstValueFrom(
             this.client.send<Model, CreatePayload<Model>>(
-                { cmd: microservices().commands(this.service).CREATE },
+                { cmd: configuration().ms.commands(this.service).CREATE },
                 { dto, options },
             ),
         );
@@ -38,7 +39,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     get(id: EntityId, options: Omit<SafeFindOptions<Model>, "where"> = {}): Promise<Model> {
         return firstValueFrom(
             this.client.send<Model, GetPayload<Model>>(
-                { cmd: microservices().commands(this.service).GET },
+                { cmd: configuration().ms.commands(this.service).GET },
                 { id, options },
             ),
         );
@@ -51,7 +52,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     getOne(options: SafeFindOptions<Model> & { skipThrow?: true }, field?: string): Promise<Model | null> {
         return firstValueFrom(
             this.client.send<Model, GetOnePayload<Model>>(
-                { cmd: microservices().commands(this.service).GET_ONE },
+                { cmd: configuration().ms.commands(this.service).GET_ONE },
                 { options, field },
             ),
         );
@@ -60,7 +61,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     getMany(options: SafeFindManyOptions<Model> = {}): Promise<Model[]> {
         return firstValueFrom(
             this.client.send<Model[], GetManyPayload<Model>>(
-                { cmd: microservices().commands(this.service).GET_MANY },
+                { cmd: configuration().ms.commands(this.service).GET_MANY },
                 { options },
             ),
         );
@@ -69,7 +70,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     getAll(options: FindAllOptions<Model> = {}): Promise<Model[]> {
         return firstValueFrom(
             this.client.send<Model[], GetAllPayload<Model>>(
-                { cmd: microservices().commands(this.service).GET_ALL },
+                { cmd: configuration().ms.commands(this.service).GET_ALL },
                 { options },
             ),
         );
@@ -82,7 +83,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     ): Promise<Model> {
         return firstValueFrom(
             this.client.send<Model, UpdatePayload<Model>>(
-                { cmd: microservices().commands(this.service).UPDATE },
+                { cmd: configuration().ms.commands(this.service).UPDATE },
                 { id, dto, options },
             ),
         );
@@ -91,7 +92,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     delete(id: EntityId): Promise<SuccessResponse> {
         return firstValueFrom(
             this.client.send<SuccessResponse, DeletePayload<Model>>(
-                { cmd: microservices().commands(this.service).DELETE },
+                { cmd: configuration().ms.commands(this.service).DELETE },
                 { id },
             ),
         );
@@ -100,7 +101,7 @@ export abstract class ClientCrudService<Model extends BaseModel> {
     deleteOne(options: SafeFindOptions<Model>): Promise<SuccessResponse> {
         return firstValueFrom(
             this.client.send<SuccessResponse, DeleteOnePayload<Model>>(
-                { cmd: microservices().commands(this.service).DELETE_ONE },
+                { cmd: configuration().ms.commands(this.service).DELETE_ONE },
                 { options },
             ),
         );

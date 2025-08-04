@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
-import { ClientCrudService, CreatePayload, EntityId, microservices, Service, SuccessResponse } from "@tweet/core";
+import { ClientCrudService, configuration, CreatePayload, EntityId, ServiceName, SuccessResponse } from "@tweet/core";
 import {
     CreateTweetReplyDto,
     DeleteTweetReplyPayload,
@@ -17,14 +17,14 @@ import { firstValueFrom } from "rxjs";
 
 @Injectable()
 export class TweetClientService extends ClientCrudService<Tweet> {
-    constructor(@Inject(microservices().tweet.name) protected override readonly client: ClientProxy) {
-        super(client, Service.TWEET);
+    constructor(@Inject(configuration().ms.tweet.name) protected override readonly client: ClientProxy) {
+        super(client, ServiceName.TWEET);
     }
 
     updateTweet(id: EntityId, userId: EntityId, dto: UpdateTweetDto): Promise<Tweet> {
         return firstValueFrom(
             this.client.send<Tweet, UpdateTweetPayload>(
-                { cmd: microservices().tweet.commands.UPDATE_TWEET },
+                { cmd: configuration().ms.tweet.commands.UPDATE_TWEET },
                 { id, userId, dto },
             ),
         );
@@ -33,7 +33,7 @@ export class TweetClientService extends ClientCrudService<Tweet> {
     deleteTweet(id: EntityId, userId: EntityId): Promise<SuccessResponse> {
         return firstValueFrom(
             this.client.send<SuccessResponse, DeleteTweetPayload>(
-                { cmd: microservices().tweet.commands.DELETE_TWEET },
+                { cmd: configuration().ms.tweet.commands.DELETE_TWEET },
                 { id, userId },
             ),
         );
@@ -42,7 +42,7 @@ export class TweetClientService extends ClientCrudService<Tweet> {
     toggleLike(id: EntityId, userId: EntityId): Promise<TweetLike> {
         return firstValueFrom(
             this.client.send<TweetLike, ToggleLikePayload>(
-                { cmd: microservices().tweet.commands.TOGGLE_TWEET_LIKE },
+                { cmd: configuration().ms.tweet.commands.TOGGLE_TWEET_LIKE },
                 { id, userId },
             ),
         );
@@ -51,7 +51,7 @@ export class TweetClientService extends ClientCrudService<Tweet> {
     createReply(id: EntityId, userId: EntityId, dto: CreateTweetReplyDto): Promise<TweetReply> {
         return firstValueFrom(
             this.client.send<TweetReply, CreatePayload<TweetReply>>(
-                { cmd: microservices().tweet.commands.REPLY_TWEET },
+                { cmd: configuration().ms.tweet.commands.REPLY_TWEET },
                 { dto: { ...dto, tweetId: id, authorId: userId } },
             ),
         );
@@ -60,7 +60,7 @@ export class TweetClientService extends ClientCrudService<Tweet> {
     getReplies(id: EntityId): Promise<TweetReply[]> {
         return firstValueFrom(
             this.client.send<TweetReply[], GetTweetRepliesPayload>(
-                { cmd: microservices().tweet.commands.GET_TWEET_REPLIES },
+                { cmd: configuration().ms.tweet.commands.GET_TWEET_REPLIES },
                 { id },
             ),
         );
@@ -69,7 +69,7 @@ export class TweetClientService extends ClientCrudService<Tweet> {
     deleteReply(id: EntityId, replyId: EntityId, userId: EntityId): Promise<SuccessResponse> {
         return firstValueFrom(
             this.client.send<SuccessResponse, DeleteTweetReplyPayload>(
-                { cmd: microservices().tweet.commands.DELETE_TWEET_REPLY },
+                { cmd: configuration().ms.tweet.commands.DELETE_TWEET_REPLY },
                 { id, userId, replyId },
             ),
         );

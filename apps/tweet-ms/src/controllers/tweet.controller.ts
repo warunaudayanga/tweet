@@ -2,12 +2,12 @@ import { Controller } from "@nestjs/common";
 import { TweetService } from "../services";
 import { MessagePattern } from "@nestjs/microservices";
 import {
+    configuration,
     CreatePayload,
     GetAllPayload,
     GetManyPayload,
     GetPayload,
-    microservices,
-    Service,
+    ServiceName,
     SuccessResponse,
 } from "@tweet/core";
 import {
@@ -26,52 +26,52 @@ import {
 export class TweetController {
     constructor(private readonly tweetService: TweetService) {}
 
-    @MessagePattern({ cmd: microservices().commands(Service.TWEET).GET })
+    @MessagePattern({ cmd: configuration().ms.commands(ServiceName.TWEET).GET })
     get({ id }: GetPayload<Tweet>): Promise<Tweet> {
         return this.tweetService.get(id);
     }
 
-    @MessagePattern({ cmd: microservices().commands(Service.TWEET).GET_MANY })
+    @MessagePattern({ cmd: configuration().ms.commands(ServiceName.TWEET).GET_MANY })
     getMany({ options }: GetManyPayload<Tweet>): Promise<Tweet[]> {
         return this.tweetService.getMany(options);
     }
 
-    @MessagePattern({ cmd: microservices().commands(Service.TWEET).GET_ALL })
+    @MessagePattern({ cmd: configuration().ms.commands(ServiceName.TWEET).GET_ALL })
     getAll({ options }: GetAllPayload<Tweet>): Promise<Tweet[]> {
         return this.tweetService.getAll(options);
     }
 
-    @MessagePattern({ cmd: microservices().commands(Service.TWEET).CREATE })
+    @MessagePattern({ cmd: configuration().ms.commands(ServiceName.TWEET).CREATE })
     create({ dto }: CreatePayload<Tweet>): Promise<Tweet> {
         return this.tweetService.create(dto);
     }
 
-    @MessagePattern({ cmd: microservices().tweet.commands.UPDATE_TWEET })
+    @MessagePattern({ cmd: configuration().ms.tweet.commands.UPDATE_TWEET })
     updateTweet({ id, userId, dto }: UpdateTweetPayload): Promise<Tweet> {
         return this.tweetService.updateTweet(id, userId, dto);
     }
 
-    @MessagePattern({ cmd: microservices().tweet.commands.DELETE_TWEET })
+    @MessagePattern({ cmd: configuration().ms.tweet.commands.DELETE_TWEET })
     deleteTweet({ id, userId }: DeleteTweetPayload): Promise<SuccessResponse> {
         return this.tweetService.deleteTweet(id, userId);
     }
 
-    @MessagePattern({ cmd: microservices().tweet.commands.TOGGLE_TWEET_LIKE })
+    @MessagePattern({ cmd: configuration().ms.tweet.commands.TOGGLE_TWEET_LIKE })
     toggleLike({ id, userId }: ToggleLikePayload): Promise<TweetLike> {
         return this.tweetService.toggleLike(id, userId);
     }
 
-    @MessagePattern({ cmd: microservices().tweet.commands.REPLY_TWEET })
+    @MessagePattern({ cmd: configuration().ms.tweet.commands.REPLY_TWEET })
     replyToTweet({ id, userId, dto }: ReplyTweetPayload): Promise<TweetReply> {
         return this.tweetService.createReply(id, userId, dto);
     }
 
-    @MessagePattern({ cmd: microservices().tweet.commands.GET_TWEET_REPLIES })
+    @MessagePattern({ cmd: configuration().ms.tweet.commands.GET_TWEET_REPLIES })
     getReplies({ id }: GetTweetRepliesPayload): Promise<TweetReply[]> {
         return this.tweetService.getReplies(id);
     }
 
-    @MessagePattern({ cmd: microservices().tweet.commands.DELETE_TWEET_REPLY })
+    @MessagePattern({ cmd: configuration().ms.tweet.commands.DELETE_TWEET_REPLY })
     deleteReply({ id, replyId, userId }: DeleteTweetReplyPayload): Promise<SuccessResponse> {
         return this.tweetService.deleteReply(id, replyId, userId);
     }
