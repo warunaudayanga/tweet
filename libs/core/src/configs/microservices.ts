@@ -1,4 +1,5 @@
 import { Transport } from "@nestjs/microservices";
+import { configuration } from "./configuration";
 
 export enum Service {
     USER = "user",
@@ -22,8 +23,8 @@ export const microservices = () => ({
         name: "USER_SERVICE",
         transport: Transport.TCP,
         options: {
-            host: "127.0.0.1",
-            port: 3002,
+            host: configuration().ms.user.host,
+            port: configuration().ms.user.port,
         },
         commands: {
             UPDATE_USER: `update_${Service.USER}`,
@@ -34,8 +35,8 @@ export const microservices = () => ({
         name: "TWEET_SERVICE",
         transport: Transport.TCP,
         options: {
-            host: "127.0.0.1",
-            port: 3001,
+            host: configuration().ms.tweet.host,
+            port: configuration().ms.tweet.port,
         },
         commands: {
             GET_TWEETS: `get_${Service.TWEET}s`,

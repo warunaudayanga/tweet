@@ -1,6 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import * as dotenv from "dotenv";
+import * as process from "node:process";
 
 dotenv.config();
 
@@ -54,6 +55,20 @@ export const configuration = () => ({
     },
     regex: {
         email: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+    },
+    ms: {
+        gateway: {
+            host: process.env.MS_GATEWAY_HOST || "localhost",
+            port: Number(process.env.MS_GATEWAY_PORT || 3000),
+        },
+        user: {
+            host: process.env.MS_USER_HOST || "localhost",
+            port: Number(process.env.MS_USER_PORT || 3001),
+        },
+        tweet: {
+            host: process.env.MS_TWEET_HOST || "localhost",
+            port: Number(process.env.MS_TWEET_PORT || 3002),
+        },
     },
 });
 // # sourceMappingURL=configuration.js.map

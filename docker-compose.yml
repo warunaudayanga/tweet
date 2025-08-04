@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: apps/tweet-gateway/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - user-ms
+      - tweet-ms
+    environment:
+      NODE_ENV: production
+    env_file:
+      - .env
+      # add env vars
+    networks:
+      - tweet-net
+
+  user-ms:
+    build:
+      context: .
+      dockerfile: apps/user-ms/Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: production
+    env_file:
+      - .env
+    networks:
+      - tweet-net
+
+  tweet-ms:
+    build:
+      context: .
+      dockerfile: apps/tweet-ms/Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres
+    environment:
+      NODE_ENV: production
+    env_file:
+      - .env
+    networks:
+      - tweet-net
+
+  postgres:
+    image: bitnami/postgresql:13
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=root
+      - POSTGRESQL_DATABASE=tweets
+    volumes:
+      - postgres-data:/bitnami/postgresql
+    ports:
+      - "5433:5432"
+    networks:
+      - tweet-net
+
+networks:
+  tweet-net:
+    driver: bridge
+
+volumes:
+  postgres-data:

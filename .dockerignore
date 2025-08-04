@@ -1,0 +1,14 @@
+# Node modules
+node_modules
+
+# Nx build output
+dist
+tmp
+
+# Git and IDE files
+.git
+.gitignore
+Dockerfile
+.dockerignore
+.env
+*.log
