@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Put, UseGuards } from "@nestjs/common";
 import { Endpoint, EntityId, SuccessResponse } from "@tweet/core";
 import { JwtAuthGuard } from "../auth/guards";
 import { UpdateUserDto, User } from "@tweet/core/user";
@@ -30,7 +30,7 @@ export class UserController {
         return this.userService.getAll();
     }
 
-    @Patch(":id")
+    @Put(":id")
     @UseGuards(JwtAuthGuard)
     update(
         @Param("id") id: EntityId,
