@@ -1,14 +1,15 @@
 #file: noinspection UndefinedAction
+# file: .github/workflows/deploy.yml
 name: Deploy to EC2 via Docker Compose
 
 on:
   push:
     branches:
-      - release  # Trigger deployment on push to main branch
+      - release  # Trigger deployment on push to release branch
 
 jobs:
   deploy:
-    runs-on: ${{ secrets.EC2_SSH_USER }}-latest  # Use the latest ${{ secrets.EC2_SSH_USER }} runner
+    runs-on: ubuntu-latest  # GitHub-hosted runner
 
     steps:
       # Step 1: Checkout your repository code (optional)
@@ -21,7 +22,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_SSH_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}   # Assumes this key is provided securely
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/${{ secrets.EC2_SSH_USER }}
             if [ ! -d "tweet/.git" ]; then
