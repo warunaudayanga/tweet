@@ -1,0 +1,35 @@
+import { Controller } from "@nestjs/common";
+import { UserService } from "../services";
+import { MessagePattern } from "@nestjs/microservices";
+import { GetAllPayload, GetOnePayload, GetPayload, microservices, Service, SuccessResponse } from "@tweet/core";
+import { DeleteUserPayload, UpdateUserPayload, User } from "@tweet/core/user";
+
+@Controller()
+export class UserController {
+    constructor(private readonly userService: UserService) {}
+
+    @MessagePattern({ cmd: microservices().commands(Service.USER).GET })
+    get({ id, options }: GetPayload<User>): Promise<User> {
+        return this.userService.get(id, options);
+    }
+
+    @MessagePattern({ cmd: microservices().commands(Service.USER).GET_ONE })
+    getOne({ options, field }: GetOnePayload<User>): Promise<User> {
+        return this.userService.getOne(options, field);
+    }
+
+    @MessagePattern({ cmd: microservices().commands(Service.USER).GET_ALL })
+    getAll({ options }: GetAllPayload<User>): Promise<User[]> {
+        return this.userService.getAll(options);
+    }
+
+    @MessagePattern({ cmd: microservices().user.commands.UPDATE_USER })
+    update({ id, dto, userId }: UpdateUserPayload): Promise<User> {
+        return this.userService.updateUser(id, dto, userId);
+    }
+
+    @MessagePattern({ cmd: microservices().user.commands.DELETE_USER })
+    delete({ id, userId }: DeleteUserPayload): Promise<SuccessResponse> {
+        return this.userService.deleteUser(id, userId);
+    }
+}

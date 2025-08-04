@@ -1,2 +1,2 @@
 export * from "./lib/config.module";
-export * from "./microservices";
+// export * from "./microservices";

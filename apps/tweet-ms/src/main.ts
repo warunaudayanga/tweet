@@ -3,7 +3,7 @@
 import { NestFactory } from "@nestjs/core";
 import { TweetModule } from "./tweet.module";
 import { MicroserviceOptions } from "@nestjs/microservices";
-import { microservices } from "@tweet/config";
+import { microservices } from "@tweet/core";
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.createMicroservice<MicroserviceOptions>(TweetModule, microservices().tweet);

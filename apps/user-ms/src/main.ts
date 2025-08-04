@@ -1,23 +1,14 @@
 // noinspection JSIgnoredPromiseFromCall
 
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
-import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app/app.module";
+import { UserModule } from "./user.module";
+import { MicroserviceOptions } from "@nestjs/microservices";
+import { microservices } from "@tweet/core";
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    const globalPrefix = "api";
-    app.setGlobalPrefix(globalPrefix);
-    const port = process.env.PORT || 3000;
-    await app.listen(port);
-    Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+async function bootstrap(): Promise<void> {
+    const app = await NestFactory.createMicroservice<MicroserviceOptions>(UserModule, microservices().user);
+
+    await app.listen();
 }
-
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

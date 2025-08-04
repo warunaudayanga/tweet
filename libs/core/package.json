@@ -1,0 +1,42 @@
+{
+  "name": "@tweet/core",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./email": {
+      "types": "./src/email.ts",
+      "import": "./src/email.ts",
+      "default": "./src/email.ts"
+    },
+    "./cache": {
+      "types": "./src/cache.ts",
+      "import": "./src/cache.ts",
+      "default": "./src/cache.ts"
+    },
+    "./user": {
+      "types": "./src/user.ts",
+      "import": "./src/user.ts",
+      "default": "./src/user.ts"
+    },
+    "./tweet": {
+      "types": "./src/tweet.ts",
+      "import": "./src/tweet.ts",
+      "default": "./src/tweet.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "name": "core",
+    "tags": [
+      "core"
+    ]
+  },
+  "dependencies": {}
+}
