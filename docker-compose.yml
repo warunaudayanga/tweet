@@ -47,6 +47,3 @@ services:
 networks:
   tweet-net:
     driver: bridge
-
-volumes:
-  postgres-data:
