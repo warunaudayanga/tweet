@@ -92,26 +92,69 @@ MS_TWEET_PORT=3002
 
 ### Authentication (Public)
 - `POST /auth/register` - Register a new user
+  ```json
+  {
+    "firstName": "string",
+    "lastName": "string", 
+    "email": "string",
+    "password": "string (min 6 characters)"
+  }
+  ```
 - `POST /auth/login` - Login user
+  ```json
+  {
+    "email": "string",
+    "password": "string"
+  }
+  ```
 
 ### Authentication (Protected)
 - `GET /auth/me` - Get current user info
 - `POST /auth/refresh` - Refresh JWT token
+  ```json
+  {
+    "refreshToken": "string (JWT)"
+  }
+  ```
 - `POST /auth/logout` - Logout user
 
 ### User (Protected)
 - `GET /user/:id` - Get user profile
 - `PUT /user/:id` - Update user profile (own profile only)
+  ```json
+  {
+    "firstName": "string (optional)",
+    "lastName": "string (optional)",
+    "email": "string (optional)",
+    "password": "string (optional, min 6 characters)"
+  }
+  ```
 - `DELETE /user/:id` - Delete user profile (own profile only)
 
 ### Tweet (Protected)
 - `GET /tweet` - Get all tweets with pagination
 - `GET /tweet/:id` - Get specific tweet
 - `POST /tweet` - Create new tweet
+  ```json
+  {
+    "content": "string (max 280 characters)"
+  }
+  ```
 - `PUT /tweet/:id` - Update tweet (owner only)
+  ```json
+  {
+    "content": "string (optional, max 280 characters)"
+  }
+  ```
 - `DELETE /tweet/:id` - Delete tweet (owner only)
 - `POST /tweet/:id/like` - Like/unlike a tweet
 - `POST /tweet/:id/reply` - Reply to a tweet
+  ```json
+  {
+    "content": "string (max 280 characters)",
+    "tweetId": "string (UUID)"
+  }
+  ```
 - `GET /tweet/:id/replies` - Get tweet replies
 
 ## Features

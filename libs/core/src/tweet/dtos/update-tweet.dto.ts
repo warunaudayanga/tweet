@@ -5,8 +5,4 @@ export class UpdateTweetDto {
     @IsString()
     @MaxLength(280)
     content?: string;
-
-    @IsOptional()
-    @IsString()
-    media?: string;
 }
