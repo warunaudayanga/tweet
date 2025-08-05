@@ -98,15 +98,14 @@ export const configuration = () =>
             },
             commands: (service: ServiceName) =>
                 ({
-                    CREATE: `create_${service}`,
-                    GET: `get_${service}`,
-                    GET_ONE: `get_one_${service}`,
-                    GET_MANY: `get_many_${service}s`,
-                    GET_ALL: `get_all_${service}s`,
-                    UPDATE: `update_${service}`,
-                    DELETE: `delete_${service}`,
-                    DELETE_ONE: `delete_one_${service}`,
+                    CREATE: `base_create_${service}`,
+                    GET: `base_get_${service}`,
+                    GET_ONE: `base_get_one_${service}`,
+                    GET_MANY: `base_get_many_${service}s`,
+                    GET_ALL: `base_get_all_${service}s`,
+                    UPDATE: `base_update_${service}`,
+                    DELETE: `base_delete_${service}`,
+                    DELETE_ONE: `base_delete_one_${service}`,
                 }) as const,
         },
     }) as const;
-// # sourceMappingURL=configuration.js.map

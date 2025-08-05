@@ -9,6 +9,7 @@ import {
     GetPayload,
     ServiceName,
     SuccessResponse,
+    UpdatePayload,
 } from "@tweet/core";
 import { DeleteUserPayload, UpdateUserPayload, User } from "@tweet/core/user";
 
@@ -36,13 +37,18 @@ export class UserController {
         return this.userService.create(dto);
     }
 
+    @MessagePattern({ cmd: configuration().ms.commands(ServiceName.USER).UPDATE })
+    update({ id, dto, options }: UpdatePayload<User>): Promise<User> {
+        return this.userService.update(id, dto, options);
+    }
+
     @MessagePattern({ cmd: configuration().ms.user.commands.UPDATE_USER })
-    update({ id, dto, userId }: UpdateUserPayload): Promise<User> {
+    updateUser({ id, dto, userId }: UpdateUserPayload): Promise<User> {
         return this.userService.updateUser(id, dto, userId);
     }
 
     @MessagePattern({ cmd: configuration().ms.user.commands.DELETE_USER })
-    delete({ id, userId }: DeleteUserPayload): Promise<SuccessResponse> {
+    deleteUser({ id, userId }: DeleteUserPayload): Promise<SuccessResponse> {
         return this.userService.deleteUser(id, userId);
     }
 }

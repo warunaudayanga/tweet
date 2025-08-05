@@ -9,6 +9,7 @@ services:
       - "3000:3000"
     depends_on:
       - postgres
+      - migration-runner
       - user-ms
       - tweet-ms
       - redis
@@ -28,6 +29,7 @@ services:
       - "3001:3001"
     depends_on:
       - postgres
+      - migration-runner
     environment:
       NODE_ENV: production
     env_file:
@@ -43,6 +45,7 @@ services:
       - "3002:3002"
     depends_on:
       - postgres
+      - migration-runner
     environment:
       NODE_ENV: production
     env_file:
@@ -59,14 +62,14 @@ services:
       - postgres
     command: sh -c "npm install && npm run migration:run"
     env_file:
-      - .env
+      - docker.env
     networks:
       - tweet-net
 
   postgres:
     image: bitnami/postgresql:13
     environment:
-      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_USERNAME=tweets
       - POSTGRESQL_PASSWORD=root
       - POSTGRESQL_DATABASE=tweets
     volumes:

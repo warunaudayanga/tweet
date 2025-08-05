@@ -19,7 +19,7 @@ export class EmailModule {
                     },
                     preview: true,
                     template: {
-                        dir: join(process.cwd(), templateDir, "pages"),
+                        dir: join(__dirname, templateDir, "pages"),
                         adapter: new HandlebarsAdapter(),
                         options: {
                             strict: true,
@@ -27,7 +27,7 @@ export class EmailModule {
                     },
                     options: {
                         partials: {
-                            dir: join(process.cwd(), templateDir, "partials"),
+                            dir: join(__dirname, templateDir, "partials"),
                             options: {
                                 strict: true,
                             },

@@ -5,6 +5,7 @@ import { TweetReplyService } from "./tweet-reply.service";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 import { CreateTweetReplyDto, Tweet, TweetLike, TweetReply } from "@tweet/core/tweet";
 import { CrudService, EntityId, Errors, FindAllOptions, SafeFindOptions, SuccessResponse } from "@tweet/core";
+import { RpcException } from "@nestjs/microservices";
 
 @Injectable()
 export class TweetService extends CrudService<Tweet> {
@@ -52,7 +53,9 @@ export class TweetService extends CrudService<Tweet> {
     ): Promise<Tweet> {
         const tweet = await this.get(id);
         if (tweet.authorId !== userId) {
-            throw Errors.forbidden("You are not allowed to update this tweet. Only the author can update it.");
+            throw new RpcException(
+                Errors.forbidden("You are not allowed to update this tweet. Only the author can update it."),
+            );
         }
 
         return super.update(id, updateData, options);
@@ -61,7 +64,9 @@ export class TweetService extends CrudService<Tweet> {
     async deleteTweet(id: EntityId, userId: EntityId): Promise<SuccessResponse> {
         const tweet = await this.get(id);
         if (tweet.authorId !== userId) {
-            throw Errors.forbidden("You are not allowed to delete this tweet. Only the author can delete it.");
+            throw new RpcException(
+                Errors.forbidden("You are not allowed to delete this tweet. Only the author can delete it."),
+            );
         }
 
         return super.delete(id);

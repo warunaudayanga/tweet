@@ -23,7 +23,6 @@ export class LocalAuthGuard extends AuthGuard(AuthStrategy.LOCAL) {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     override handleRequest(error: Error, user: User, _info: unknown): any {
-        // You can throw an exception based on either "info" or "error" arguments
         if (error || !user) {
             if (!(error instanceof HttpException)) Logger.error(error, this.constructor.name);
 

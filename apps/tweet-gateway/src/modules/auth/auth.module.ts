@@ -8,7 +8,7 @@ import { EmailModule } from "@tweet/core/email";
 import { CacheModule } from "@tweet/core/cache";
 
 @Module({
-    imports: [EmailModule.forRoot("dist/apps/tweet-gateway/assets/templates"), CacheModule, UserModule],
+    imports: [EmailModule.forRoot("assets/templates"), CacheModule, UserModule],
     controllers: [AuthController],
     providers: [
         AuthService,

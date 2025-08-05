@@ -1,10 +1,5 @@
 // noinspection JSIgnoredPromiseFromCall
 
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { BadRequestException, ClassSerializerInterceptor, Logger, ValidationPipe } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory, Reflector } from "@nestjs/core";
 import { AppModule } from "./app.module";

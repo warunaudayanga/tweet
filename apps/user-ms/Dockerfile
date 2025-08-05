@@ -17,6 +17,9 @@ COPY --from=builder /app/dist/apps/user-ms ./dist
 WORKDIR /app/dist
 RUN npm install --omit=dev --ignore-scripts
 
+# Switch back to /app so we can use relative path like dist/main.js when starting
+WORKDIR /app
+
 # Expose and run
 EXPOSE 3000
-CMD ["node", "main.js"]
+CMD ["node", "dist/main.js"]
