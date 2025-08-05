@@ -25,6 +25,8 @@ docker-compose up
 
 The API will be available at `http://localhost:3000`
 
+Note: Database migrations will run automatically when the application starts.
+
 ### Local Development
 
 1. Install dependencies:
@@ -34,7 +36,12 @@ npm install
 
 2. Set up your environment variables (copy from `.env` file)
 
-3. Run the application:
+3. Run database migrations:
+```bash
+npm run migration:run
+```
+
+4. Run the application:
 ```bash
 npm run start:dev
 ```
@@ -77,4 +84,21 @@ npm run start:dev
 
 ## Database
 
-The application uses PostgreSQL with TypeORM for data persistence. Database schema is automatically generated based on entity definitions.
+The application uses PostgreSQL with TypeORM for data persistence. Database schema is managed through TypeORM migrations.
+
+### Migration Commands
+
+- `npm run migration:run` - Run pending migrations
+- `npm run migration:revert` - Revert the last migration
+- `npm run migration:generate --name=MigrationName` - Generate a new migration based on entity changes
+- `npm run migration:create --name=MigrationName` - Create a blank migration file
+
+### Database Schema
+
+The database includes the following tables:
+- **users** - User accounts with authentication details
+- **tweets** - Tweet content and metadata
+- **tweet-likes** - User likes on tweets
+- **tweet-replies** - Replies to tweets
+
+All tables include standard fields: id (UUID), created_at, updated_at, and deleted_at for soft deletes.
