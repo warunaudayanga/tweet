@@ -99,12 +99,12 @@ MS_TWEET_PORT=3002
 - `POST /auth/refresh` - Refresh JWT token
 - `POST /auth/logout` - Logout user
 
-### Users (Protected)
+### User (Protected)
 - `GET /user/:id` - Get user profile
 - `PUT /user/:id` - Update user profile (own profile only)
 - `DELETE /user/:id` - Delete user profile (own profile only)
 
-### Tweets (Protected)
+### Tweet (Protected)
 - `GET /tweet` - Get all tweets with pagination
 - `GET /tweet/:id` - Get specific tweet
 - `POST /tweet` - Create new tweet
